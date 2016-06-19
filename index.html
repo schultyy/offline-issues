@@ -13,7 +13,14 @@
   <div class="container">
     <div class="row">
       <div class="col-xs-12">
-        <div class="list-group">
+        <form class="form-inline">
+          <div class="form-group">
+            <label for="repositoryName">Name</label>
+            <input type="text" class="form-control" id="repositoryName" placeholder="octocat/Spoon-Knife">
+          </div>
+          <button type="submit" class="fetch-issues btn btn-default">Fetch issues</button>
+        </form>
+        <div class="list-group issue-list">
           <a href="#" class="list-group-item">
             <h4 class="list-group-item-heading">Create documentation</h4>
             <p class="list-group-item-text">...</p>
@@ -29,12 +36,15 @@
         </div>
       </div>
       <div class="col-xs-12">
-
       </div>
     </div>
   </div>
+  <script src="/js/lodash.js"></script>
   <script src="/js/jquery-2.2.4.js"></script>
   <script src="/js/bootstrap.js"></script>
+  <script src="/js/github.bundle.min.js"></script>
+  <script src="/js/pouchdb-5.4.0.js"></script>
+  <script src="/js/app.js"></script>
 </body>
 
 </html>
