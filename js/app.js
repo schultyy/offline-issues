@@ -22,9 +22,39 @@
     function renderIssueView(issue) {
       var container = $("<a href='#' class='list-group-item'>");
       var heading = $("<h4 class='list-group-item-heading'></h4>")
+      container.attr('id', issue.id);
       heading.html(issue.title);
       container.append(heading);
+      container.click(showIssueDetail);
       return container;
+    }
+
+    function showIssueDetail(ev) {
+      var id = $(this).attr('id');
+      var db = new PouchDB(repoName());
+      db.get(id)
+        .then(function(issue) {
+          var container = $('.issue-detail');
+          var backButton = $("<button>Back</button>");
+          backButton.click(hideIssueDetails);
+          container.append(backButton);
+
+          var title = $("<h4>"+ issue.title +"</h4>");
+          var text = $("<p>" + issue.body + "</p>");
+          container.append(title);
+          container.append(text);
+          $(container).show();
+          $(".issue-list").hide();
+        })
+        .catch(function(err) {
+          console.log("ERR", err);
+        });
+    }
+
+    function hideIssueDetails() {
+      $(".issue-list").show();
+      $(".issue-detail").hide();
+      $(".issue-detail").empty();
     }
   }
 
