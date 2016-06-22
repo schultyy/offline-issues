@@ -13,13 +13,29 @@
   <div class="container">
     <div class="row">
       <div class="col-xs-12">
-        <form class="form-inline repo-form">
-          <div class="form-group">
-            <label for="repositoryName">Name</label>
-            <input type="text" class="form-control" id="repositoryName" placeholder="octocat/Spoon-Knife">
+        <div class="controls">
+          <a class="btn btn-primary" role="button" data-toggle="collapse" href="#available-repos" aria-expanded="false" aria-controls="collapseExample">
+            Available Repositories
+          </a>
+          <a class="btn btn-primary" role="button" data-toggle="collapse" href="#add-new-repo" aria-expanded="false" aria-controls="add-repo">
+            Add Repository
+          </a>
+        </div>
+        <div class="collapse" id="available-repos">
+          <div class="list-group repository-list">
           </div>
-          <button type="submit" class="fetch-issues btn btn-default">Fetch issues</button>
-        </form>
+        </div>
+        <div class="collapse" id="add-new-repo">
+          <form class="form-inline repo-form">
+            <div class="form-group">
+              <label for="repositoryName">Name</label>
+              <input type="text" class="form-control" id="repositoryName" placeholder="octocat/Spoon-Knife">
+            </div>
+            <button type="submit" class="fetch-issues btn btn-default">Fetch issues</button>
+          </form>
+        </div>
+      </div>
+      <div class="col-xs-12">
         <div class="list-group issue-list">
           <a href="#" class="list-group-item">
             <h4 class="list-group-item-heading">Create documentation</h4>
@@ -44,6 +60,7 @@
   <script src="/js/bootstrap.js"></script>
   <script src="/js/github.bundle.min.js"></script>
   <script src="/js/pouchdb-5.4.0.js"></script>
+  <script src="/js/pouchdb.all-dbs.js"></script>
   <script src="/js/app.js"></script>
 </body>
 

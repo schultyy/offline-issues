@@ -99,9 +99,22 @@
     }
   }
 
+  function loadAvailableRepositories() {
+    PouchDB.allDbs().then(function (dbs) {
+      var dbEntries = dbs.map(function(db) {
+        return $("<a href='#' class='list-group-item'>" + db + "</a>");
+      });
+      $(".repository-list").append(dbEntries);
+    }).catch(function (err) {
+      // handle err
+      console.error("Failed to fetch all databases", err);
+    });
+  }
+
   $(document).ready(function() {
     registerServiceWorker();
     $('.fetch-issues').click(fetchIssues);
+    loadAvailableRepositories();
     renderListView();
   });
 })();
