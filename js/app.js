@@ -5,12 +5,11 @@
     return $('#repositoryName').val().toString();
   }
 
-  function renderListView() {
-    var repo = repoName();
-    if(!repo || repo === "") {
-      return;
+  function renderListView(repoName) {
+    if(!repoName) {
+      throw new Error("expected repoName");
     }
-    var db = new PouchDB(repo);
+    var db = new PouchDB(repoName);
     db.allDocs({ include_docs: true })
       .then(function(docs) {
         $(".issue-list").empty();
@@ -31,7 +30,7 @@
 
     function showIssueDetail(ev) {
       var id = $(this).attr('id');
-      var db = new PouchDB(repoName());
+      var db = new PouchDB(repoName);
       db.get(id)
         .then(function(issue) {
           var container = $('.issue-detail');
@@ -74,7 +73,7 @@
       var db = new PouchDB(repo);
       db.bulkDocs(_.map(issues, setDocId))
       .then(function() {
-          renderListView();
+          renderListView(repo);
       })
       .catch(function(err){
         console.log("ERR", err);
@@ -102,7 +101,11 @@
   function loadAvailableRepositories() {
     PouchDB.allDbs().then(function (dbs) {
       var dbEntries = dbs.map(function(db) {
-        return $("<a href='#' class='list-group-item' id='"+ db +"'>" + db + "</a>");
+        var dbEntry = $("<a href='#' class='list-group-item'>" + db + "</a>");
+        dbEntry.click(function(ev) {
+          renderListView(db);
+        });
+        return dbEntry;
       });
       $(".repository-list").append(dbEntries);
     }).catch(function (err) {
@@ -115,6 +118,5 @@
     registerServiceWorker();
     $('.fetch-issues').click(fetchIssues);
     loadAvailableRepositories();
-    renderListView();
   });
 })();
