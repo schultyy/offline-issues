@@ -17,6 +17,10 @@
 }
 
 .issue-detail h4 {
-  padding: 5px;
   font-size: 30px;
+}
+
+.issue-number {
+  font-size: 25px;
+  color: gray;
 }

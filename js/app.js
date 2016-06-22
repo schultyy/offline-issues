@@ -35,13 +35,16 @@
       db.get(id)
         .then(function(issue) {
           var container = $('.issue-detail');
-          var backButton = $("<button>Back</button>");
+          var backButton = $("<div class='col-xs-12'><button>Back</button></div>");
           backButton.click(hideIssueDetails);
           container.append(backButton);
 
-          var title = $("<h4>"+ issue.title +"</h4>");
-          var text = $("<p>" + issue.body + "</p>");
+          var title = $("<div class='col-xs-11'><h4>"+ issue.title +"</h4></div>");
+          var issueNumber = $("<div class='col-xs-1'><h4 class='issue-number'>#"+ issue.number +"</h4></div>");
+          var text = $("<div class='col-xs-12'><p>" + issue.body + "</p></div>");
+          container.append(issueNumber);
           container.append(title);
+          container.append($("<div class='clearfix'>"));
           container.append(text);
           $(container).show();
           $(".issue-list").hide();
