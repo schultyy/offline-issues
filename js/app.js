@@ -102,7 +102,7 @@
   function loadAvailableRepositories() {
     PouchDB.allDbs().then(function (dbs) {
       var dbEntries = dbs.map(function(db) {
-        return $("<a href='#' class='list-group-item'>" + db + "</a>");
+        return $("<a href='#' class='list-group-item' id='"+ db +"'>" + db + "</a>");
       });
       $(".repository-list").append(dbEntries);
     }).catch(function (err) {
