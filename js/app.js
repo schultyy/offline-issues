@@ -28,6 +28,10 @@
       return container;
     }
 
+    function prepareBody(body) {
+      return markdown.toHTML(body);
+    }
+
     function showIssueDetail(ev) {
       var id = $(this).attr('id');
       var db = new PouchDB(repoName);
@@ -40,7 +44,7 @@
 
           var title = $("<div class='col-xs-11'><h4>"+ issue.title +"</h4></div>");
           var issueNumber = $("<div class='col-xs-1'><h4 class='issue-number'>#"+ issue.number +"</h4></div>");
-          var text = $("<div class='col-xs-12'><p>" + issue.body + "</p></div>");
+          var text = $("<div class='col-xs-12'><p>" + prepareBody(issue.body) + "</p></div>");
           container.append(issueNumber);
           container.append(title);
           container.append($("<div class='clearfix'>"));

@@ -12,6 +12,7 @@ var urlsToCache = [
   '/js/github.bundle.min.js',
   '/js/pouchdb-5.4.0.js',
   '/js/pouchdb.all-dbs.js',
+  '/js/markdown.js',
   '/js/app.js'
 ];
 
