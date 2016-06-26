@@ -4,16 +4,16 @@ var CACHE_NAME = 'my-site-cache-v1';
 
 var urlsToCache = [
   '/',
-  '/css/bootstrap.css',
-  '/css/app.css',
-  '/js/lodash.js',
-  '/js/jquery-2.2.4.js',
-  '/js/bootstrap.js',
-  '/js/github.bundle.min.js',
-  '/js/pouchdb-5.4.0.js',
-  '/js/pouchdb.all-dbs.js',
-  '/js/markdown.js',
-  '/js/app.js'
+  'css/bootstrap.css',
+  'css/app.css',
+  'js/lodash.js',
+  'js/jquery-2.2.4.js',
+  'js/bootstrap.js',
+  'js/github.bundle.min.js',
+  'js/pouchdb-5.4.0.js',
+  'js/pouchdb.all-dbs.js',
+  'js/markdown.js',
+  'js/app.js'
 ];
 
 self.addEventListener('install', function(event) {
