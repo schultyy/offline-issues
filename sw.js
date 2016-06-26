@@ -24,10 +24,11 @@ self.addEventListener('install', function(event) {
         console.log('Opened cache');
         return cache.addAll(urlsToCache);
       })
-  ).catch(function(err) {
+      .catch(function(err) {
         console.log("Failed to open cache");
         console.log("ERR", err);
-      });
+      })
+  );
 });
 
 self.addEventListener('fetch', function(event) {
