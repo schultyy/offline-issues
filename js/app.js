@@ -6,11 +6,11 @@ function Label(text, color) {
 }
 
 Label.prototype.render = function() {
-  var tag = $("<span class='label'>");
-  tag.html(this.text);
+  var label = $("<span class='label'>");
+  label.html(this.text);
   console.log(this.color);
-  tag.css('background-color', "#" + this.color);
-  return tag;
+  label.css('background-color', "#" + this.color);
+  return label;
 };
 
 function IssueDetailView(issue) {
