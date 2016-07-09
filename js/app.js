@@ -56,13 +56,13 @@
           console.log("ERR", err);
         });
     }
+  }
 
-    function hideIssueDetails() {
+  function hideIssueDetails() {
       $(".issue-list").show();
       $(".issue-detail").hide();
       $(".issue-detail").empty();
     }
-  }
 
   function fetchIssues(ev) {
     ev.preventDefault();
@@ -70,6 +70,7 @@
     if(!repo || repo === "") {
       return;
     }
+    hideIssueDetails();
 
     var gh = new GitHub();
     gh.getIssues(repo).listIssues()
