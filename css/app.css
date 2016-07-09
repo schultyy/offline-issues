@@ -69,6 +69,10 @@
   padding-left: 2px;
 }
 
+.issue-avatar {
+  margin: 5px;
+}
+
 .issue-user-url {
   color: white;
   text-decoration: none;

@@ -18,7 +18,7 @@ function IssueDetailView(issue) {
 }
 
 IssueDetailView.prototype.renderAvatar = function() {
-  return $("<div class='col-xs-1'><img class='img-responsive img-thumbnail' src='"+ this.issue.user.avatar_url +"'/></div>");
+  return $("<div class='col-xs-1'><img class='img-responsive img-thumbnail issue-avatar' src='"+ this.issue.user.avatar_url +"'/></div>");
 };
 
 IssueDetailView.prototype.renderLabels = function() {
