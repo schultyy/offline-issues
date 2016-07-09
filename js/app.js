@@ -54,6 +54,7 @@
         })
         .catch(function(err) {
           console.log("ERR", err);
+          new ErrorBanner(err);
         });
     }
   }
@@ -105,8 +106,8 @@
       });
       $(".repository-list").append(dbEntries);
     }).catch(function (err) {
-      // handle err
       console.error("Failed to fetch all databases", err);
+      new ErrorBanner("Failed to fetch all databases");
     });
   }
 
