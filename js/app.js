@@ -78,6 +78,7 @@
       db.bulkDocs(_.map(issues, setDocId))
       .then(function() {
           renderListView(repo);
+          $(".add-new-repo").hide();
       })
       .catch(function(err){
         console.log("ERR", err);
