@@ -96,6 +96,7 @@
         var dbEntry = $("<a href='#' class='list-group-item'>" + db + "</a>");
         dbEntry.click(function(ev) {
           renderListView(db);
+          $('#available-repos').hide();
         });
         return dbEntry;
       });
@@ -109,5 +110,14 @@
   $(document).ready(function() {
     $('.fetch-issues').click(fetchIssues);
     loadAvailableRepositories();
+    $(".show-available-repo-button").click(function() {
+      $("#available-repos").toggle();
+      $("#add-new-repo").hide();
+    });
+
+    $(".add-repo-button").click(function() {
+      $("#add-new-repo").toggle();
+      $("#available-repos").hide();
+    });
   });
 })();
