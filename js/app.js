@@ -1,11 +1,30 @@
 'use strict';
 
+function Label(text, color) {
+  this.text = text;
+  this.color = color;
+}
+
+Label.prototype.render = function() {
+  var tag = $("<span class='label'>");
+  tag.html(this.text);
+  console.log(this.color);
+  tag.css('background-color', "#" + this.color);
+  return tag;
+};
+
 function IssueDetailView(issue) {
   this.issue = issue;
 }
 
 IssueDetailView.prototype.renderAvatar = function() {
   return $("<div class='col-xs-1'><img class='img-responsive img-thumbnail' src='"+ this.issue.user.avatar_url +"'/></div>");
+};
+
+IssueDetailView.prototype.renderLabels = function() {
+  return _.map(this.issue.labels, function(label) {
+    return new Label(label.name, label.color).render();
+  });
 };
 
 IssueDetailView.prototype.renderIssueAuthorAndDate = function() {
@@ -28,10 +47,13 @@ IssueDetailView.prototype.render = function() {
 
   var title = $("<div class='col-xs-11'><span class='issue-number'>#"+ this.issue.number +"</span><span class='issue-title'>"+ this.issue.title +"</span></div>");
   var text = $("<div class='col-xs-12'><div class='issue-detail-text'>" + prepareBody(this.issue.body) + "</div></div>");
+  var labels = $("<div class='col-xs-12'></div>");
+  labels.append(this.renderLabels());
 
   container.append(this.renderAvatar());
   container.append(title);
   container.append($("<div class='clearfix'>"));
+  container.append(labels);
   container.append(this.renderIssueAuthorAndDate());
   container.append(text);
   $(container).show();
