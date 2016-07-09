@@ -63,7 +63,7 @@
       $(".issue-list").show();
       $(".issue-detail").hide();
       $(".issue-detail").empty();
-    }
+  }
 
   function fetchIssues(ev) {
     ev.preventDefault();
@@ -125,8 +125,6 @@
     }
     this.timeoutHandler = setTimeout(this.hideError, 1000 * 5);
   }
-
-
 
   $(document).ready(function() {
     $('.fetch-issues').click(fetchIssues);
