@@ -22,7 +22,7 @@
       var container = $("<a href='#' class='list-group-item'>");
       var heading = $("<h4 class='list-group-item-heading'></h4>")
       container.attr('id', issue.id);
-      heading.html(issue.title);
+      heading.html("#" + issue.number + " " + issue.title);
       container.append(heading);
       container.click(showIssueDetail);
       return container;
