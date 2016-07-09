@@ -10,7 +10,7 @@ IssueDetailView.prototype.renderAvatar = function() {
 
 IssueDetailView.prototype.renderIssueAuthorAndDate = function() {
   var authorLink = $("<a target='_new' class='issue-user-url' href='"+ this.issue.user.html_url +"'>" + this.issue.user.login + "</a>");
-  var createdAt = $("<time class='issue-created-at'>"+ this.issue.created_at +"</time>");
+  var createdAt = $("<time class='issue-created-at'>"+ moment(this.issue.created_at).format("lll") +"</time>");
 
   var authorAndDate = $("<div class='issue-author-and-date'></div>");
   authorAndDate.append(authorLink);
