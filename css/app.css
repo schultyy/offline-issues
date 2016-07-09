@@ -22,6 +22,11 @@
   color: white;
 }
 
+.button:visited {
+  text-decoration: none;
+  color: white;
+}
+
 .repo-form {
   margin-top: 15px;
 }
