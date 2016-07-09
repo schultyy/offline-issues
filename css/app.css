@@ -70,6 +70,21 @@
   padding-left: 2px;
 }
 
+.issue-user-url {
+  color: white;
+  text-decoration: none;
+}
+
+.issue-user-url:hover {
+  color: white;
+  text-decoration: none;
+}
+
+.issue-user-url:visited {
+  color: white;
+  text-decoration: none;
+}
+
 .issue-detail-text {
   border: 0.2px solid black;
   padding: 2px;

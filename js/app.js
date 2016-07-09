@@ -9,7 +9,13 @@ IssueDetailView.prototype.renderAvatar = function() {
 };
 
 IssueDetailView.prototype.renderIssueAuthorAndDate = function() {
-  return $("<div class='col-xs-12'><div class='issue-author-and-date'>" + this.issue.user.login + "</div></div>");
+  var authorLink = $("<a target='_new' class='issue-user-url' href='"+ this.issue.user.html_url +"'>" + this.issue.user.login + "</a>");
+
+  var authorAndDate = $("<div class='issue-author-and-date'></div>");
+  authorAndDate.append(authorLink);
+  var container = $("<div class='col-xs-12'></div>");
+  container.append(authorAndDate);
+  return container;
 };
 
 IssueDetailView.prototype.render = function() {
