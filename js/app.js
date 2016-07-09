@@ -87,6 +87,7 @@ IssueDetailView.prototype.hide = function() {
       issueDetailView.hide();
       issueDetailView = null;
     }
+    $(".issue-list").empty();
 
     var gh = new GitHub();
     gh.getIssues(repo).listIssues()
