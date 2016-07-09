@@ -1,6 +1,39 @@
 'use strict';
 
+function IssueDetailView(issue) {
+  this.issue = issue;
+}
+
+IssueDetailView.prototype.render = function() {
+  var container = $('.issue-detail');
+  var backButton = $("<div class='col-xs-12'><div class='back-button'></div></div>");
+  backButton.click(this.hide);
+  container.append(backButton);
+
+  var title = $("<div class='col-xs-11'><h4>"+ this.issue.title +"</h4></div>");
+  var issueNumber = $("<div class='col-xs-1'><h4 class='issue-number'>#"+ this.issue.number +"</h4></div>");
+  var text = $("<div class='col-xs-12'><p>" + prepareBody(this.issue.body) + "</p></div>");
+  container.append(issueNumber);
+  container.append(title);
+  container.append($("<div class='clearfix'>"));
+  container.append(text);
+  $(container).show();
+  $(".issue-list").hide();
+
+  function prepareBody(body) {
+    return markdown.toHTML(body);
+  }
+}
+
+IssueDetailView.prototype.hide = function() {
+  $(".issue-list").show();
+  $(".issue-detail").hide();
+  $(".issue-detail").empty();
+};
+
 (function() {
+  var issueDetailView = null;
+
   function repoName() {
     return $('#repositoryName').val().toString();
   }
@@ -28,29 +61,13 @@
       return container;
     }
 
-    function prepareBody(body) {
-      return markdown.toHTML(body);
-    }
-
     function showIssueDetail(ev) {
       var id = $(this).attr('id');
       var db = new PouchDB(repoName);
       db.get(id)
         .then(function(issue) {
-          var container = $('.issue-detail');
-          var backButton = $("<div class='col-xs-12'><div class='back-button'></div></div>");
-          backButton.click(hideIssueDetails);
-          container.append(backButton);
-
-          var title = $("<div class='col-xs-11'><h4>"+ issue.title +"</h4></div>");
-          var issueNumber = $("<div class='col-xs-1'><h4 class='issue-number'>#"+ issue.number +"</h4></div>");
-          var text = $("<div class='col-xs-12'><p>" + prepareBody(issue.body) + "</p></div>");
-          container.append(issueNumber);
-          container.append(title);
-          container.append($("<div class='clearfix'>"));
-          container.append(text);
-          $(container).show();
-          $(".issue-list").hide();
+          issueDetailView = new IssueDetailView(issue);
+          issueDetailView.render();
         })
         .catch(function(err) {
           console.log("ERR", err);
@@ -59,19 +76,17 @@
     }
   }
 
-  function hideIssueDetails() {
-      $(".issue-list").show();
-      $(".issue-detail").hide();
-      $(".issue-detail").empty();
-  }
-
   function fetchIssues(ev) {
     ev.preventDefault();
     var repo = repoName();
     if(!repo || repo === "") {
       return;
     }
-    hideIssueDetails();
+
+    if(issueDetailView) {
+      issueDetailView.hide();
+      issueDetailView = null;
+    }
 
     var gh = new GitHub();
     gh.getIssues(repo).listIssues()
