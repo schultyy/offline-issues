@@ -57,18 +57,18 @@
   <script src="js/markdown.js"></script>
   <script src="js/app.js"></script>
   <script>
-  function registerServiceWorker() {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js').then(function(registration) {
-        // Registration was successful
-        console.log('ServiceWorker registration successful with scope: ', registration.scope);
-      }).catch(function(err) {
-        // registration failed :(
-        console.log('ServiceWorker registration failed: ', err);
-      });
-    }
-  }
-  $(document).ready(function() { registerServiceWorker(); });
+  // function registerServiceWorker() {
+  //   if ('serviceWorker' in navigator) {
+  //     navigator.serviceWorker.register('sw.js').then(function(registration) {
+  //       // Registration was successful
+  //       console.log('ServiceWorker registration successful with scope: ', registration.scope);
+  //     }).catch(function(err) {
+  //       // registration failed :(
+  //       console.log('ServiceWorker registration failed: ', err);
+  //     });
+  //   }
+  // }
+  // $(document).ready(function() { registerServiceWorker(); });
   </script>
 </body>
 
