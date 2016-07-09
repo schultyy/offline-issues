@@ -54,6 +54,11 @@
   color: gray;
 }
 
+.issue-title {
+  font-size: 25px;
+  margin-left: 5px;
+}
+
 .controls {
   margin-top: 15px;
 }

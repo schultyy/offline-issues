@@ -14,11 +14,9 @@ IssueDetailView.prototype.render = function() {
   backButton.click(this.hide);
   container.append(backButton);
 
-  var title = $("<div class='col-xs-10'><h4>"+ this.issue.title +"</h4></div>");
-  var issueNumber = $("<div class='col-xs-1'><h4 class='issue-number'>#"+ this.issue.number +"</h4></div>");
+  var title = $("<div class='col-xs-11'><span class='issue-number'>#"+ this.issue.number +"</span><span class='issue-title'>"+ this.issue.title +"</span></div>");
   var text = $("<div class='col-xs-12'><p>" + prepareBody(this.issue.body) + "</p></div>");
   container.append(this.renderAvatar());
-  container.append(issueNumber);
   container.append(title);
   container.append($("<div class='clearfix'>"));
   container.append(text);
