@@ -59,6 +59,15 @@
   margin-left: 5px;
 }
 
+.issue-detail-text {
+  border: 0.2px solid black;
+  margin-top: 5px;
+  padding: 2px;
+  margin-bottom: 5px;
+  overflow-y: auto;
+  border-radius: 3px;
+}
+
 .controls {
   margin-top: 15px;
 }
