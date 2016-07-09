@@ -84,6 +84,7 @@
       })
       .catch(function(err) {
         console.log("ERR", err);
+        new ErrorBanner("Fetching issues for " + repo + " failed");
       });
 
     function setDocId(issue) {
@@ -108,6 +109,23 @@
       console.error("Failed to fetch all databases", err);
     });
   }
+
+  function ErrorBanner(message) {
+    this.timeoutHandler = null;
+
+    $(".error-banner").html(message);
+    $('.error-banner').show();
+
+    this.hideError = function() {
+      $(".error-banner").html('');
+      $('.error-banner').hide();
+      window.clearTimeout(this.timeoutHandler);
+      this.timeoutHandler = null;
+    }
+    this.timeoutHandler = setTimeout(this.hideError, 1000 * 5);
+  }
+
+
 
   $(document).ready(function() {
     $('.fetch-issues').click(fetchIssues);
