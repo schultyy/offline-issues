@@ -61,7 +61,6 @@
 
 .issue-author-and-date {
   margin-top: 5px;
-  font-size: 12px;
   background-color: #09093B;
   color: white;
   border: 1px solid #09093B;
@@ -73,6 +72,7 @@
 .issue-user-url {
   color: white;
   text-decoration: none;
+  font-size: 14px;
 }
 
 .issue-user-url:hover {
@@ -83,6 +83,11 @@
 .issue-user-url:visited {
   color: white;
   text-decoration: none;
+}
+
+.issue-created-at {
+  font-size: 11px;
+  margin-left: 5px;
 }
 
 .issue-detail-text {
