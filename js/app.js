@@ -72,18 +72,18 @@
     }
 
     var gh = new GitHub();
-    var issueHandle = gh.getIssues(repo);
-    issueHandle.listIssues({}, function(_none, issues) {
-      var db = new PouchDB(repo);
-      db.bulkDocs(_.map(issues, setDocId))
-      .then(function() {
-          renderListView(repo);
-          $(".add-new-repo").hide();
+    gh.getIssues(repo).listIssues()
+      .then(function(resultSet) {
+        var db = new PouchDB(repo);
+        return db.bulkDocs(_.map(resultSet.data, setDocId));
       })
-      .catch(function(err){
+      .then(function(){
+        renderListView(repo);
+        $(".add-new-repo").hide();
+      })
+      .catch(function(err) {
         console.log("ERR", err);
       });
-    });
 
     function setDocId(issue) {
       issue['_id'] = issue.id.toString();
