@@ -8,6 +8,10 @@ IssueDetailView.prototype.renderAvatar = function() {
   return $("<div class='col-xs-1'><img class='img-responsive img-thumbnail' src='"+ this.issue.user.avatar_url +"'/></div>");
 };
 
+IssueDetailView.prototype.renderIssueAuthorAndDate = function() {
+  return $("<div class='col-xs-12'><div class='issue-author-and-date'>" + this.issue.user.login + "</div></div>");
+};
+
 IssueDetailView.prototype.render = function() {
   var container = $('.issue-detail');
   var backButton = $("<div class='col-xs-12'><div class='back-button'></div></div>");
@@ -16,9 +20,11 @@ IssueDetailView.prototype.render = function() {
 
   var title = $("<div class='col-xs-11'><span class='issue-number'>#"+ this.issue.number +"</span><span class='issue-title'>"+ this.issue.title +"</span></div>");
   var text = $("<div class='col-xs-12'><div class='issue-detail-text'>" + prepareBody(this.issue.body) + "</div></div>");
+
   container.append(this.renderAvatar());
   container.append(title);
   container.append($("<div class='clearfix'>"));
+  container.append(this.renderIssueAuthorAndDate());
   container.append(text);
   $(container).show();
   $(".issue-list").hide();

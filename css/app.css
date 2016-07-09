@@ -59,13 +59,24 @@
   margin-left: 5px;
 }
 
+.issue-author-and-date {
+  margin-top: 5px;
+  font-size: 12px;
+  background-color: #09093B;
+  color: white;
+  border: 1px solid #09093B;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  padding-left: 2px;
+}
+
 .issue-detail-text {
   border: 0.2px solid black;
-  margin-top: 5px;
   padding: 2px;
   margin-bottom: 5px;
   overflow-y: auto;
-  border-radius: 3px;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 
 .controls {
