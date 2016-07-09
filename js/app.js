@@ -4,15 +4,20 @@ function IssueDetailView(issue) {
   this.issue = issue;
 }
 
+IssueDetailView.prototype.renderAvatar = function() {
+  return $("<div class='col-xs-1'><img class='img-responsive img-thumbnail' src='"+ this.issue.user.avatar_url +"'/></div>");
+};
+
 IssueDetailView.prototype.render = function() {
   var container = $('.issue-detail');
   var backButton = $("<div class='col-xs-12'><div class='back-button'></div></div>");
   backButton.click(this.hide);
   container.append(backButton);
 
-  var title = $("<div class='col-xs-11'><h4>"+ this.issue.title +"</h4></div>");
+  var title = $("<div class='col-xs-10'><h4>"+ this.issue.title +"</h4></div>");
   var issueNumber = $("<div class='col-xs-1'><h4 class='issue-number'>#"+ this.issue.number +"</h4></div>");
   var text = $("<div class='col-xs-12'><p>" + prepareBody(this.issue.body) + "</p></div>");
+  container.append(this.renderAvatar());
   container.append(issueNumber);
   container.append(title);
   container.append($("<div class='clearfix'>"));
