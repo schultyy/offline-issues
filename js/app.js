@@ -118,6 +118,10 @@ IssueDetailView.prototype.hide = function() {
       var dbEntries = dbs.map(function(db) {
         var dbEntry = $("<a href='#' class='list-group-item'>" + db + "</a>");
         dbEntry.click(function(ev) {
+          if(issueDetailView) {
+            issueDetailView.hide();
+            issueDetailView = null;
+          }
           renderListView(db);
           $('.available-repos').hide();
         });
