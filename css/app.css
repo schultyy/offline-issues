@@ -57,3 +57,19 @@
 .controls {
   margin-top: 15px;
 }
+
+.back-button {
+  cursor: pointer;
+  background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNiIgaGVpZ2h0PSIzNiIgdmlld0JveD0iMCAwIDM2IDM2Ij48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMzAgMTYuNUgxMS43NGw4LjM4LTguMzhMMTggNiA2IDE4bDEyIDEyIDIuMTItMi4xMi04LjM4LTguMzhIMzB2LTN6Ii8+PC9zdmc+);
+  background-color: rgba(0,0,0,.20);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  border: none;
+  margin: 10px;
+
+}
+
+.back-button:hover {
+  background-color: rgba(0,0,0,.30);
+}

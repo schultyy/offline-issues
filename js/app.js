@@ -38,7 +38,7 @@
       db.get(id)
         .then(function(issue) {
           var container = $('.issue-detail');
-          var backButton = $("<div class='col-xs-12'><button>Back</button></div>");
+          var backButton = $("<div class='col-xs-12'><div class='back-button'></div></div>");
           backButton.click(hideIssueDetails);
           container.append(backButton);
 
