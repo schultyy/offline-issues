@@ -17,7 +17,7 @@ function IssueDetailView(issue) {
 }
 
 IssueDetailView.prototype.renderAvatar = function() {
-  return $("<div class='col-xs-1'><img class='img-responsive img-thumbnail issue-avatar' src='"+ this.issue.user.avatar_url +"'/></div>");
+  return $("<div class='col-xs-3 col-sm-2'><img class='img-responsive img-thumbnail issue-avatar' src='"+ this.issue.user.avatar_url +"'/></div>");
 };
 
 IssueDetailView.prototype.renderLabels = function() {
@@ -33,23 +33,24 @@ IssueDetailView.prototype.renderIssueAuthorAndDate = function() {
   var authorAndDate = $("<div class='issue-author-and-date'></div>");
   authorAndDate.append(authorLink);
   authorAndDate.append(createdAt);
-  var container = $("<div class='col-xs-12'></div>");
+  var container = $("<div class='col-xs-12 col-sm-12'></div>");
   container.append(authorAndDate);
   return container;
 };
 
 IssueDetailView.prototype.render = function() {
   var container = $('.issue-detail');
-  var backButton = $("<div class='col-xs-12'><div class='back-button'></div></div>");
+  var backButton = $("<div class='col-xs-12 col-sm-12'><div class='back-button'></div></div>");
   backButton.click(this.hide);
   container.append(backButton);
 
-  var title = $("<div class='col-xs-11'><span class='issue-number'>#"+ this.issue.number +"</span><span class='issue-title'>"+ this.issue.title +"</span></div>");
-  var text = $("<div class='col-xs-12'><div class='issue-detail-text'>" + prepareBody(this.issue.body) + "</div></div>");
-  var labels = $("<div class='col-xs-12'></div>");
+  var title = $("<div class='col-xs-11 col-sm-11'><span class='issue-number'>#"+ this.issue.number +"</span><span class='issue-title'>"+ this.issue.title +"</span></div>");
+  var text = $("<div class='col-xs-12 col-sm-12'><div class='issue-detail-text'>" + prepareBody(this.issue.body) + "</div></div>");
+  var labels = $("<div class='col-xs-12 col-sm-12'></div>");
   labels.append(this.renderLabels());
 
   container.append(this.renderAvatar());
+  container.append($("<div class='clearfix'>"));
   container.append(title);
   container.append($("<div class='clearfix'>"));
   container.append(labels);
