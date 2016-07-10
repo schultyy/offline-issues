@@ -157,11 +157,12 @@ TokenModalScreen.prototype.token = function() {
 }
 
 TokenModalScreen.prototype.onClose = function() {
-  storeToken(this.token())
+  var self = this;
+  storeToken(self.token())
   .then(function() {
     $(".modal").modal('hide');
-    if(this.success) {
-      this.success();
+    if(self.success) {
+      self.success(self.token());
     }
   })
   .catch(function(err) {
