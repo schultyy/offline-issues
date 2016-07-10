@@ -102,10 +102,12 @@ IssueListView.prototype.renderIssueView = function(issue) {
   }
 };
 
-function IssueStore(repositoryName) {
+function IssueStore(repositoryName, accessToken) {
   this.repositoryName = repositoryName;
   this.issueDatabase = new PouchDB(this.repositoryName);
-  this.apiClient = new GitHub();
+  this.apiClient = new GitHub({
+    token: accessToken
+  });
 }
 
 IssueStore.prototype.loadIssuesFromGitHub = function() {
@@ -139,6 +141,7 @@ function getToken() {
 }
 
 function TokenModalScreen() {
+  this.success = function() {};
   $(".personal-access-token-input").blur(function() {
     if($(this).val().length > 0) {
       $(".modal-footer button").removeClass('disabled');
@@ -157,11 +160,13 @@ TokenModalScreen.prototype.onClose = function() {
   storeToken(this.token())
   .then(function() {
     $(".modal").modal('hide');
+    if(this.success) {
+      this.success();
+    }
   })
   .catch(function(err) {
     console.log(err);
-  })
-
+  });
 };
 
 TokenModalScreen.prototype.show = function() {
@@ -173,6 +178,7 @@ TokenModalScreen.prototype.show = function() {
 (function() {
   var issueDetailView = null;
   var database = null;
+  var accessToken = null;
 
   function renderListView() {
     database.allIssues()
@@ -210,7 +216,7 @@ TokenModalScreen.prototype.show = function() {
     }
     $(".issue-list").empty();
 
-    database = new IssueStore(repo);
+    database = new IssueStore(repo, accessToken);
     database.loadIssuesFromGitHub()
       .then(function(resultSet) {
         return database.bulkInsertIssues(resultSet.data);
@@ -234,7 +240,7 @@ TokenModalScreen.prototype.show = function() {
             issueDetailView.hide();
             issueDetailView = null;
           }
-          database = new IssueStore(db);
+          database = new IssueStore(db, accessToken);
           renderListView();
           $('.available-repos').hide();
         });
@@ -265,15 +271,19 @@ TokenModalScreen.prototype.show = function() {
   $(document).ready(function() {
     getToken()
     .then(function(token) {
-      console.log(token);
+      accessToken = token.value;
+      loadAvailableRepositories();
     })
     .catch(function(err) {
       var modal = new TokenModalScreen();
       modal.show();
+      modal.success = function(token) {
+        accessToken = token.value;
+        loadAvailableRepositories();
+      };
     });
 
     $('.fetch-issues').click(fetchIssues);
-    loadAvailableRepositories();
     $(".show-available-repo-button").click(function() {
       $(".available-repos").toggle();
       $(".add-new-repo").hide();
