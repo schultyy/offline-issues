@@ -397,7 +397,7 @@ TokenModalScreen.prototype.removeHandlers = function() {
       var modal = new TokenModalScreen();
       modal.show();
       modal.success = function(token) {
-        accessToken = token.value;
+        accessToken = token;
         loadAvailableRepositories();
         modal.removeHandlers();
         modal = null;
