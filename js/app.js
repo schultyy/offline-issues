@@ -107,6 +107,11 @@ function IssueStore(repositoryName) {
   this.database = new PouchDB(this.repositoryName);
 }
 
+IssueStore.prototype.loadIssuesFromGitHub = function() {
+  var gh = new GitHub();
+  return gh.getIssues(this.repositoryName).listIssues();
+};
+
 IssueStore.prototype.getIssue = function(id) {
   return this.database.get(id);
 };
@@ -163,10 +168,9 @@ IssueStore.prototype.bulkInsertIssues = function(docs) {
     }
     $(".issue-list").empty();
 
-    var gh = new GitHub();
-    gh.getIssues(repo).listIssues()
+    database = new IssueStore(repo);
+    database.loadIssuesFromGitHub()
       .then(function(resultSet) {
-        database = new IssueStore(repo);
         return database.bulkInsertIssues(resultSet.data);
       })
       .then(function(){
