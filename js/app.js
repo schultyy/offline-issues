@@ -212,6 +212,13 @@ TokenModalScreen.prototype.show = function() {
     new ErrorBanner("Fetching comments failed with:" + ev.message);
   }
 
+  function startCommentworker(accessToken, repo) {
+    var worker = new Worker("js/commentWorker.js");
+    worker.postMessage({accessToken: accessToken, repoName: repo});
+    worker.onmessage = workerCompleted;
+    worker.onerror = workerFailed;
+  }
+
   function fetchIssues(ev) {
     ev.preventDefault();
     var repo = $('#repositoryName').val().toString();
@@ -231,10 +238,7 @@ TokenModalScreen.prototype.show = function() {
         return database.bulkInsertIssues(resultSet.data);
       })
       .then(function(){
-        var worker = new Worker("js/commentWorker.js");
-        worker.postMessage({accessToken: accessToken, repoName: repo});
-        worker.onmessage = workerCompleted;
-        worker.onerror = workerFailed;
+        startCommentworker(accessToken, repo);
         renderListView();
         $(".add-new-repo").hide();
       })
