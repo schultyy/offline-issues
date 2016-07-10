@@ -129,3 +129,15 @@
   padding: 5px;
   border-radius: 3px;
 }
+
+@media (max-width: 768px) {
+  .label {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 992px) {
+  .label {
+    font-size: 11px;
+  }
+}

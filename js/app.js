@@ -6,7 +6,7 @@ function Label(text, color) {
 }
 
 Label.prototype.render = function() {
-  var label = $("<span class='label'>");
+  var label = $("<span class='label col-xs-8 col-sm-3'>");
   label.html(this.text);
   label.css('background-color', "#" + this.color);
   return label;
