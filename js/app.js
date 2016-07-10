@@ -294,6 +294,16 @@ TokenModalScreen.prototype.removeHandlers = function() {
     worker.onerror = workerFailed;
   }
 
+  function disableForLoading() {
+    $(".issue-list").hide();
+    $(".loading-indicator").show();
+  }
+
+  function enableAfterLoading() {
+    $(".issue-list").show();
+    $(".loading-indicator").hide();
+  }
+
   function fetchIssues(ev) {
     ev.preventDefault();
     var repo = $('#repositoryName').val().toString();
@@ -306,6 +316,7 @@ TokenModalScreen.prototype.removeHandlers = function() {
       issueDetailView = null;
     }
     $(".issue-list").empty();
+    disableForLoading();
 
     database = new IssueStore(repo, accessToken);
     database.loadIssuesFromGitHub()
@@ -316,6 +327,7 @@ TokenModalScreen.prototype.removeHandlers = function() {
         startCommentworker(accessToken, repo);
         renderListView();
         $(".add-new-repo").hide();
+        enableAfterLoading();
       })
       .catch(function(err) {
         console.log("ERR", err);
