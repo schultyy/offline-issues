@@ -6,7 +6,7 @@ function Label(text, color) {
 }
 
 Label.prototype.render = function() {
-  var label = $("<span class='label col-xs-8 col-sm-3'>");
+  var label = $("<span class='label col-xs-12 col-sm-3'>");
   label.html(this.text);
   label.css('background-color', "#" + this.color);
   return label;
@@ -44,13 +44,12 @@ IssueDetailView.prototype.render = function() {
   backButton.click(this.hide);
   container.append(backButton);
 
-  var title = $("<div class='col-xs-11 col-sm-11'><span class='issue-number'>#"+ this.issue.number +"</span><span class='issue-title'>"+ this.issue.title +"</span></div>");
+  var title = $("<div class='col-xs-12 col-sm-9'><span class='issue-number'>#"+ this.issue.number +"</span><span class='issue-title'>"+ this.issue.title +"</span></div>");
   var text = $("<div class='col-xs-12 col-sm-12'><div class='issue-detail-text'>" + prepareBody(this.issue.body) + "</div></div>");
   var labels = $("<div class='col-xs-12 col-sm-12'></div>");
   labels.append(this.renderLabels());
 
   container.append(this.renderAvatar());
-  container.append($("<div class='clearfix'>"));
   container.append(title);
   container.append($("<div class='clearfix'>"));
   container.append(labels);
