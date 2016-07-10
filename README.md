@@ -32,3 +32,8 @@ $ http-server
 - PouchDB
 - PouchDB all-dbs
 - markdown.js
+- 
+
+## License
+
+MIT
