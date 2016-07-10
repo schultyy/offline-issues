@@ -39,14 +39,27 @@ IssueDetailView.prototype.renderIssueAuthorAndDate = function() {
   return container;
 };
 
-IssueDetailView.prototype.render = function() {
+IssueDetailView.prototype.renderComments = function(container) {
   this.issueStore.loadCommentsForIssue(this.issue.number)
   .then(function(comments) {
-    console.log(comments);
+    container.append(_.map(comments, function(comment) {
+      var commentContainer = $("<div class='col-xs-12 col-sm-12'></div>");
+      var authorLink = $("<a target='_new' class='issue-user-url' href='"+ comment.user.html_url +"'>" + comment.user.login + "</a>");
+      var createdAt = $("<time class='issue-created-at'>"+ moment(comment.created_at).format("lll") +"</time>");
+      var authorAndDate = $("<div class='issue-author-and-date'></div>");
+      authorAndDate.append(authorLink);
+      authorAndDate.append(createdAt);
+      commentContainer.append(authorAndDate);
+      commentContainer.append($("<p class='issue-detail-text'>" + comment.body + "</p>"));
+      return commentContainer;
+    }));
   })
   .catch(function (err) {
     new ErrorBanner("Error while fetching comments: " + err.message);
   });
+};
+
+IssueDetailView.prototype.render = function() {
   var container = $('.issue-detail');
   var backButton = $("<div class='col-xs-12 col-sm-12'><div class='back-button'></div></div>");
   backButton.click(this.hide);
@@ -65,6 +78,7 @@ IssueDetailView.prototype.render = function() {
   container.append(text);
   $(container).show();
   $(".issue-list").hide();
+  this.renderComments(container);
 
   function prepareBody(body) {
     return markdown.toHTML(body);
@@ -144,9 +158,11 @@ IssueStore.prototype.loadCommentsForIssue = function(issueNumber) {
       include_docs: true
     });
   }).then(function (result) {
-    return Promise.resolve(_.map(result.rows, function(row) {
+    var comments = _.map(result.rows, function(row) {
       return row.doc;
-    }));
+    });
+
+    return Promise.resolve(_.sortBy(comments, function(comment) { return comment.created_at; }));
   });
 };
 
