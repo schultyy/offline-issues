@@ -204,6 +204,11 @@ TokenModalScreen.prototype.show = function() {
     }
   }
 
+  function workerCompleted(ev) {
+    console.log("WORKER COMPLETED");
+    console.log(ev);
+  }
+
   function fetchIssues(ev) {
     ev.preventDefault();
     var repo = $('#repositoryName').val().toString();
@@ -223,6 +228,10 @@ TokenModalScreen.prototype.show = function() {
         return database.bulkInsertIssues(resultSet.data);
       })
       .then(function(){
+        var worker = new Worker("js/commentWorker.js");
+        worker.postMessage({accessToken: accessToken, repoName: repo});
+        worker.onmessage = workerCompleted;
+        worker.onerror = workerCompleted;
         renderListView();
         $(".add-new-repo").hide();
       })
