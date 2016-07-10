@@ -188,7 +188,20 @@ IssueStore.prototype.bulkInsertIssues = function(docs) {
 
 function storeToken(token) {
   var db = new PouchDB("appconfig");
-  return db.put({_id: "accesstoken", value: token});
+  return db.get("accesstoken").catch(function(err) {
+    if(err.name === 'not_found') {
+      return {
+        "_id": "accesstoken",
+        "value": ""
+      };
+    } else {
+      console.log('err caught', err);
+      throw err;
+    }
+  }).then(function(doc) {
+    doc.value = token.trim();
+    return db.put(doc);
+  });
 };
 
 function getToken() {
@@ -197,6 +210,7 @@ function getToken() {
 }
 
 function TokenModalScreen() {
+  $(".personal-access-token-input").val('');
   this.success = function() {};
   $(".personal-access-token-input").blur(function() {
     if($(this).val().length > 0) {
@@ -230,6 +244,11 @@ TokenModalScreen.prototype.show = function() {
   $('.modal').modal({
       show: true
   });
+};
+
+TokenModalScreen.prototype.removeHandlers = function() {
+  $(".personal-access-token-input").unbind();
+  $(".modal-footer button").unbind();
 };
 
 (function() {
@@ -328,6 +347,16 @@ TokenModalScreen.prototype.show = function() {
     });
   }
 
+  function configureAccessToken() {
+    var modal = new TokenModalScreen();
+    modal.show();
+    modal.success = function(token) {
+      accessToken = token;
+      modal.removeHandlers();
+      modal = null;
+    };
+  }
+
   function ErrorBanner(message) {
     this.timeoutHandler = null;
 
@@ -370,8 +399,12 @@ TokenModalScreen.prototype.show = function() {
       modal.success = function(token) {
         accessToken = token.value;
         loadAvailableRepositories();
+        modal.removeHandlers();
+        modal = null;
       };
     });
+
+    $(".reconfigure-token-button").click(configureAccessToken);
 
     $('.fetch-issues').click(fetchIssues);
     $(".show-available-repo-button").click(function() {
