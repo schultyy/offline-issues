@@ -90,6 +90,9 @@ IssueListView.prototype.renderIssueView = function(issue) {
   return container;
 
   function buildHeading() {
+    if(isPR()) {
+      return "#" + issue.number + " [Pull Request] " + issue.title;
+    }
     return "#" + issue.number + " " + issue.title;
   }
 
