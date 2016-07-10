@@ -128,6 +128,48 @@ IssueStore.prototype.bulkInsertIssues = function(docs) {
   }
 };
 
+function storeToken(token) {
+  var db = new PouchDB("appconfig");
+  return db.put({_id: "accesstoken", value: token});
+};
+
+function getToken() {
+  var db = new PouchDB("appconfig");
+  return db.get("accesstoken");
+}
+
+function TokenModalScreen() {
+  $(".personal-access-token-input").blur(function() {
+    if($(this).val().length > 0) {
+      $(".modal-footer button").removeClass('disabled');
+    } else {
+      $(".modal-footer button").addClass('disabled');
+    }
+  });
+  $(".modal-footer button").click(this.onClose.bind(this));
+}
+
+TokenModalScreen.prototype.token = function() {
+  return $(".personal-access-token-input").val();
+}
+
+TokenModalScreen.prototype.onClose = function() {
+  storeToken(this.token())
+  .then(function() {
+    $(".modal").modal('hide');
+  })
+  .catch(function(err) {
+    console.log(err);
+  })
+
+};
+
+TokenModalScreen.prototype.show = function() {
+  $('.modal').modal({
+      show: true
+  });
+};
+
 (function() {
   var issueDetailView = null;
   var database = null;
@@ -221,6 +263,15 @@ IssueStore.prototype.bulkInsertIssues = function(docs) {
   }
 
   $(document).ready(function() {
+    getToken()
+    .then(function(token) {
+      console.log(token);
+    })
+    .catch(function(err) {
+      var modal = new TokenModalScreen();
+      modal.show();
+    });
+
     $('.fetch-issues').click(fetchIssues);
     loadAvailableRepositories();
     $(".show-available-repo-button").click(function() {

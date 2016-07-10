@@ -11,6 +11,22 @@
 </head>
 <body>
   <div class="container">
+    <div class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Configure your personal access token</h4>
+          </div>
+          <div class="modal-body">
+            <p>Please configure your GitHub personal access token</p>
+            <input type="text" class="personal-access-token-input" />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary disabled">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="row">
       <div class="col-xs-12 col-sm-12">
         <div class="alert alert-danger error-banner collapse" role="alert"></div>
@@ -55,7 +71,7 @@
   <script src="js/jquery-2.2.4.js"></script>
   <script src="js/bootstrap.js"></script>
   <script src="js/github.bundle.min.js"></script>
-  <script src="js/pouchdb-5.4.0.js"></script>
+  <script src="js/pouchdb-5.4.5.js"></script>
   <script src="js/pouchdb.all-dbs.js"></script>
   <script src="sw.js"></script>
   <script src="js/markdown.js"></script>
