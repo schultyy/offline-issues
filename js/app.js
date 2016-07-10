@@ -84,10 +84,18 @@ IssueListView.prototype.renderIssueView = function(issue) {
   var container = $("<a href='#' class='list-group-item'>");
   var heading = $("<h4 class='list-group-item-heading'></h4>")
   container.attr('id', issue.id);
-  heading.html("#" + issue.number + " " + issue.title);
+  heading.html(buildHeading());
   container.append(heading);
   container.click(this.detailCallback);
   return container;
+
+  function buildHeading() {
+    return "#" + issue.number + " " + issue.title;
+  }
+
+  function isPR() {
+    return issue.hasOwnProperty("pull_request");
+  }
 };
 
 (function() {
