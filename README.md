@@ -1,6 +1,6 @@
-# erebor
+# Offline Issues
 
-See what's under the mountain. It stores your issues, offline.
+This is your GitHub Issues client in the browser.
 
 ## Start it locally
 
