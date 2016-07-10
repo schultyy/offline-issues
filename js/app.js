@@ -104,24 +104,24 @@ IssueListView.prototype.renderIssueView = function(issue) {
 
 function IssueStore(repositoryName) {
   this.repositoryName = repositoryName;
-  this.database = new PouchDB(this.repositoryName);
+  this.issueDatabase = new PouchDB(this.repositoryName);
+  this.apiClient = new GitHub();
 }
 
 IssueStore.prototype.loadIssuesFromGitHub = function() {
-  var gh = new GitHub();
-  return gh.getIssues(this.repositoryName).listIssues();
+  return this.apiClient.getIssues(this.repositoryName).listIssues();
 };
 
 IssueStore.prototype.getIssue = function(id) {
-  return this.database.get(id);
+  return this.issueDatabase.get(id);
 };
 
 IssueStore.prototype.allIssues = function() {
-  return this.database.allDocs({include_docs: true});
+  return this.issueDatabase.allDocs({include_docs: true});
 };
 
 IssueStore.prototype.bulkInsertIssues = function(docs) {
-  return this.database.bulkDocs(_.map(docs, setDocId));
+  return this.issueDatabase.bulkDocs(_.map(docs, setDocId));
   function setDocId(issue) {
     issue['_id'] = issue.id.toString();
     return issue;
