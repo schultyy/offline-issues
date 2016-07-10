@@ -208,6 +208,10 @@ TokenModalScreen.prototype.show = function() {
     new InfoBanner("Fetched comments ✅");
   }
 
+  function workerFailed(ev) {
+    new ErrorBanner("Fetching comments failed with:" + ev.message);
+  }
+
   function fetchIssues(ev) {
     ev.preventDefault();
     var repo = $('#repositoryName').val().toString();
@@ -230,7 +234,7 @@ TokenModalScreen.prototype.show = function() {
         var worker = new Worker("js/commentWorker.js");
         worker.postMessage({accessToken: accessToken, repoName: repo});
         worker.onmessage = workerCompleted;
-        worker.onerror = workerCompleted;
+        worker.onerror = workerFailed;
         renderListView();
         $(".add-new-repo").hide();
       })
