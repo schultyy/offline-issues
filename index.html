@@ -18,8 +18,14 @@
             <h4 class="modal-title">Configure your personal access token</h4>
           </div>
           <div class="modal-body">
-            <p>Please configure your GitHub personal access token</p>
-            <input type="text" class="personal-access-token-input" />
+            <p>
+              In order to access Issues from GitHub, you need a personal access token. <br />
+              <strong>You can get it <a target="_new" href="https://github.com/settings/tokens">here</a>.</strong><br />
+              With this token configured you can access private repositories and are not rate limited. Othwise
+              the GitHub API throttles access after a certain quota is exceeded. This can happen easily because
+              both issues and comments are taken into account here.
+            </p>
+            <input type="text" class="personal-access-token-input" placeholder="Paste your token here" />
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary disabled">Save changes</button>

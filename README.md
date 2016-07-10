@@ -2,6 +2,15 @@
 
 This is your GitHub Issues client in the browser.
 
+## Usage
+
+You open the application from here: [https://schultyy.github.io/offline-issues/](https://schultyy.github.io/offline-issues/).
+
+**Please note**: In order to use the application with all features you will need a personal access token from GitHub. You can
+configure it here: [https://github.com/settings/tokens](https://github.com/settings/tokens).
+With this token configured you can access private repositories as well as public ones and also the access quota is not as low as
+without this token.
+
 ## Start it locally
 
 Install a http server to deliver the page:

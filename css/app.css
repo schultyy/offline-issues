@@ -130,6 +130,10 @@
   border-radius: 3px;
 }
 
+.personal-access-token-input {
+  width: 100%;
+}
+
 @media (max-width: 768px) {
   .label {
     font-size: 9px;
