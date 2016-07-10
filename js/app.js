@@ -233,7 +233,9 @@ TokenModalScreen.prototype.show = function() {
 
   function loadAvailableRepositories() {
     PouchDB.allDbs().then(function (dbs) {
-      var dbEntries = dbs.map(function(db) {
+      var dbEntries = dbs
+      .filter(function(db) { return db !== 'appconfig'; })
+      .map(function(db) {
         var dbEntry = $("<a href='#' class='list-group-item'>" + db + "</a>");
         dbEntry.click(function(ev) {
           if(issueDetailView) {
