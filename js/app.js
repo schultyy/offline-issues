@@ -205,8 +205,7 @@ TokenModalScreen.prototype.show = function() {
   }
 
   function workerCompleted(ev) {
-    console.log("WORKER COMPLETED");
-    console.log(ev);
+    new InfoBanner("Fetched comments ✅");
   }
 
   function fetchIssues(ev) {
@@ -278,6 +277,21 @@ TokenModalScreen.prototype.show = function() {
       this.timeoutHandler = null;
     }
     this.timeoutHandler = setTimeout(this.hideError, 1000 * 5);
+  }
+
+  function InfoBanner(message) {
+    this.timeoutHandler = null;
+
+    $(".info-banner").html(message);
+    $('.info-banner').show();
+
+    this.hideInfo = function() {
+      $(".info-banner").html('');
+      $('.info-banner').hide();
+      window.clearTimeout(this.timeoutHandler);
+      this.timeoutHandler = null;
+    }
+    this.timeoutHandler = setTimeout(this.hideInfo, 1000 * 5);
   }
 
   $(document).ready(function() {
