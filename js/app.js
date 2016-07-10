@@ -223,7 +223,7 @@ function TokenModalScreen() {
 }
 
 TokenModalScreen.prototype.token = function() {
-  return $(".personal-access-token-input").val();
+  return $(".personal-access-token-input").val().trim();
 }
 
 TokenModalScreen.prototype.onClose = function() {
