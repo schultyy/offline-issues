@@ -49,17 +49,17 @@
   font-size: 30px;
 }
 
-.issue-number {
+.issue-detail .number {
   font-size: 25px;
   color: gray;
 }
 
-.issue-title {
+.issue-detail .title {
   font-size: 25px;
   margin-left: 5px;
 }
 
-.issue-author-and-date {
+.issue-detail .author-and-date {
   margin-top: 5px;
   background-color: #565695;
   color: white;
@@ -69,32 +69,32 @@
   padding-left: 2px;
 }
 
-.issue-avatar {
+.issue-detail .avatar {
   margin: 5px;
 }
 
-.issue-user-url {
+.issue-detail .user-url {
   color: white;
   text-decoration: none;
   font-size: 14px;
 }
 
-.issue-user-url:hover {
+.issue-detail .user-url:hover {
   color: white;
   text-decoration: none;
 }
 
-.issue-user-url:visited {
+.issue-detail .user-url:visited {
   color: white;
   text-decoration: none;
 }
 
-.issue-created-at {
+.issue-detail .created-at {
   font-size: 11px;
   margin-left: 5px;
 }
 
-.issue-detail-text {
+.issue-detail .text {
   border: 0.2px solid black;
   padding: 2px;
   margin-bottom: 5px;

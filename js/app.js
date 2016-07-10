@@ -18,7 +18,7 @@ function IssueDetailView(issue, issueStore) {
 }
 
 IssueDetailView.prototype.renderAvatar = function() {
-  return $("<div class='col-xs-3 col-sm-2'><img class='img-responsive img-thumbnail issue-avatar' src='"+ this.issue.user.avatar_url +"'/></div>");
+  return $("<div class='col-xs-3 col-sm-2'><img class='img-responsive img-thumbnail avatar' src='"+ this.issue.user.avatar_url +"'/></div>");
 };
 
 IssueDetailView.prototype.renderLabels = function() {
@@ -28,10 +28,10 @@ IssueDetailView.prototype.renderLabels = function() {
 };
 
 IssueDetailView.prototype.renderIssueAuthorAndDate = function() {
-  var authorLink = $("<a target='_new' class='issue-user-url' href='"+ this.issue.user.html_url +"'>" + this.issue.user.login + "</a>");
-  var createdAt = $("<time class='issue-created-at'>"+ moment(this.issue.created_at).format("lll") +"</time>");
+  var authorLink = $("<a target='_new' class='user-url' href='"+ this.issue.user.html_url +"'>" + this.issue.user.login + "</a>");
+  var createdAt = $("<time class='created-at'>"+ moment(this.issue.created_at).format("lll") +"</time>");
 
-  var authorAndDate = $("<div class='issue-author-and-date'></div>");
+  var authorAndDate = $("<div class='author-and-date'></div>");
   authorAndDate.append(authorLink);
   authorAndDate.append(createdAt);
   var container = $("<div class='col-xs-12 col-sm-12'></div>");
@@ -44,13 +44,13 @@ IssueDetailView.prototype.renderComments = function(container) {
   .then(function(comments) {
     container.append(_.map(comments, function(comment) {
       var commentContainer = $("<div class='col-xs-12 col-sm-12'></div>");
-      var authorLink = $("<a target='_new' class='issue-user-url' href='"+ comment.user.html_url +"'>" + comment.user.login + "</a>");
-      var createdAt = $("<time class='issue-created-at'>"+ moment(comment.created_at).format("lll") +"</time>");
-      var authorAndDate = $("<div class='issue-author-and-date'></div>");
+      var authorLink = $("<a target='_new' class='user-url' href='"+ comment.user.html_url +"'>" + comment.user.login + "</a>");
+      var createdAt = $("<time class='created-at'>"+ moment(comment.created_at).format("lll") +"</time>");
+      var authorAndDate = $("<div class='author-and-date'></div>");
       authorAndDate.append(authorLink);
       authorAndDate.append(createdAt);
       commentContainer.append(authorAndDate);
-      commentContainer.append($("<p class='issue-detail-text'>" + comment.body + "</p>"));
+      commentContainer.append($("<p class='text'>" + comment.body + "</p>"));
       return commentContainer;
     }));
   })
@@ -65,8 +65,8 @@ IssueDetailView.prototype.render = function() {
   backButton.click(this.hide);
   container.append(backButton);
 
-  var title = $("<div class='col-xs-12 col-sm-9'><span class='issue-number'>#"+ this.issue.number +"</span><span class='issue-title'>"+ this.issue.title +"</span></div>");
-  var text = $("<div class='col-xs-12 col-sm-12'><div class='issue-detail-text'>" + prepareBody(this.issue.body) + "</div></div>");
+  var title = $("<div class='col-xs-12 col-sm-9'><span class='number'>#"+ this.issue.number +"</span><span class='title'>"+ this.issue.title +"</span></div>");
+  var text = $("<div class='col-xs-12 col-sm-12'><div class='text'>" + prepareBody(this.issue.body) + "</div></div>");
   var labels = $("<div class='col-xs-12 col-sm-12'></div>");
   labels.append(this.renderLabels());
 
