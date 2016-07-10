@@ -76,7 +76,8 @@ function IssueListView(issues, detailCallback) {
 
 IssueListView.prototype.render = function(detailCallback) {
   $(".issue-list").empty();
-  var views = _.map(this.issues, this.renderIssueView.bind(this));
+  var sortedIssues = _.sortBy(this.issues, function(issue) { return issue.created_at; })
+  var views = _.map(sortedIssues.reverse(), this.renderIssueView.bind(this));
   $(".issue-list").append(views);
 };
 
