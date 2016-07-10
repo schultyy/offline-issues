@@ -69,6 +69,27 @@ IssueDetailView.prototype.hide = function() {
   $(".issue-detail").empty();
 };
 
+function IssueListView(issues, detailCallback) {
+  this.issues = issues;
+  this.detailCallback = detailCallback;
+}
+
+IssueListView.prototype.render = function(detailCallback) {
+  $(".issue-list").empty();
+  var views = _.map(this.issues, this.renderIssueView.bind(this));
+  $(".issue-list").append(views);
+};
+
+IssueListView.prototype.renderIssueView = function(issue) {
+  var container = $("<a href='#' class='list-group-item'>");
+  var heading = $("<h4 class='list-group-item-heading'></h4>")
+  container.attr('id', issue.id);
+  heading.html("#" + issue.number + " " + issue.title);
+  container.append(heading);
+  container.click(this.detailCallback);
+  return container;
+};
+
 (function() {
   var issueDetailView = null;
   var database = null;
@@ -80,21 +101,11 @@ IssueDetailView.prototype.hide = function() {
   function renderListView() {
     database.allDocs({ include_docs: true })
       .then(function(docs) {
-        $(".issue-list").empty();
-        var plainDocs = _.map(docs.rows, function(d) { return d.doc; });
-        var views = _.map(plainDocs, renderIssueView);
-        $(".issue-list").append(views);
+        return Promise.resolve(_.map(docs.rows, function(d) { return d.doc; }));
+      })
+      .then(function(plainDocs) {
+        new IssueListView(plainDocs, showIssueDetail).render();
       });
-
-    function renderIssueView(issue) {
-      var container = $("<a href='#' class='list-group-item'>");
-      var heading = $("<h4 class='list-group-item-heading'></h4>")
-      container.attr('id', issue.id);
-      heading.html("#" + issue.number + " " + issue.title);
-      container.append(heading);
-      container.click(showIssueDetail);
-      return container;
-    }
 
     function showIssueDetail(ev) {
       var id = $(this).attr('id');
