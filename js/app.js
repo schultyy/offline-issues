@@ -127,10 +127,6 @@ IssueStore.prototype.bulkInsertIssues = function(docs) {
   var issueDetailView = null;
   var database = null;
 
-  function repoName() {
-    return $('#repositoryName').val().toString();
-  }
-
   function renderListView() {
     database.allIssues()
       .then(function(docs) {
@@ -156,7 +152,7 @@ IssueStore.prototype.bulkInsertIssues = function(docs) {
 
   function fetchIssues(ev) {
     ev.preventDefault();
-    var repo = repoName();
+    var repo = $('#repositoryName').val().toString();
     if(!repo || repo === "") {
       return;
     }
