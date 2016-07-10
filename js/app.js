@@ -12,8 +12,9 @@ Label.prototype.render = function() {
   return label;
 };
 
-function IssueDetailView(issue) {
+function IssueDetailView(issue, issueStore) {
   this.issue = issue;
+  this.issueStore = issueStore;
 }
 
 IssueDetailView.prototype.renderAvatar = function() {
@@ -39,6 +40,13 @@ IssueDetailView.prototype.renderIssueAuthorAndDate = function() {
 };
 
 IssueDetailView.prototype.render = function() {
+  this.issueStore.loadCommentsForIssue(this.issue.number)
+  .then(function(comments) {
+    console.log(comments);
+  })
+  .catch(function (err) {
+    new ErrorBanner("Error while fetching comments: " + err.message);
+  });
   var container = $('.issue-detail');
   var backButton = $("<div class='col-xs-12 col-sm-12'><div class='back-button'></div></div>");
   backButton.click(this.hide);
@@ -105,10 +113,42 @@ IssueListView.prototype.renderIssueView = function(issue) {
 function IssueStore(repositoryName, accessToken) {
   this.repositoryName = repositoryName;
   this.issueDatabase = new PouchDB(this.repositoryName);
+  this.commentsDatabase = new PouchDB(this.repositoryName + "/comments");
   this.apiClient = new GitHub({
     token: accessToken
   });
 }
+
+IssueStore.prototype.loadCommentsForIssue = function(issueNumber) {
+  var designDocument = {
+    _id: '_design/index',
+    views: {
+      index: {
+        map: function mapFun(doc) {
+          if (doc.issueId) {
+            emit(doc.issueId);
+          }
+        }.toString()
+      }
+    }
+  };
+
+  var self = this;
+  return this.commentsDatabase.put(designDocument).catch(function (err) {
+    if (err.name !== 'conflict') {
+      throw err;
+    }
+  }).then(function () {
+    return self.commentsDatabase.query('index', {
+      key: issueNumber,
+      include_docs: true
+    });
+  }).then(function (result) {
+    return Promise.resolve(_.map(result.rows, function(row) {
+      return row.doc;
+    }));
+  });
+};
 
 IssueStore.prototype.loadIssuesFromGitHub = function() {
   return this.apiClient.getIssues(this.repositoryName).listIssues();
@@ -194,7 +234,7 @@ TokenModalScreen.prototype.show = function() {
       var id = $(this).attr('id');
       database.getIssue(id)
         .then(function(issue) {
-          issueDetailView = new IssueDetailView(issue);
+          issueDetailView = new IssueDetailView(issue, database);
           issueDetailView.render();
         })
         .catch(function(err) {
