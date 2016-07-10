@@ -251,7 +251,7 @@ TokenModalScreen.prototype.show = function() {
   function loadAvailableRepositories() {
     PouchDB.allDbs().then(function (dbs) {
       var dbEntries = dbs
-      .filter(function(db) { return db !== 'appconfig'; })
+      .filter(function(db) { return db !== 'appconfig' && db.indexOf("/comments") === -1 ; })
       .map(function(db) {
         var dbEntry = $("<a href='#' class='list-group-item'>" + db + "</a>");
         dbEntry.click(function(ev) {
