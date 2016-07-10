@@ -42,7 +42,16 @@ $ http-server
 - PouchDB
 - PouchDB all-dbs
 - markdown.js
-- 
+
+## Contribute
+Contributions are very welcome. Whether it's an issue or even a pull request. For pull requests you can use the following flow:
+
+  1. Fork it
+  2. Create your feature branch (git checkout -b my-new-feature)
+  3. Commit your changes (git commit -am 'Add some feature')
+  4. Push to the branch (git push origin my-new-feature)
+  5. Create new Pull Request
+
 
 ## License
 
