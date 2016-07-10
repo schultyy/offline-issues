@@ -4,6 +4,7 @@ var CACHE_NAME = 'offline-issues-cache-v1';
 
 var urlsToCache = [
   '/',
+  '/index.html',
   'css/bootstrap.css',
   'css/app.css',
   'js/lodash.js',
@@ -12,6 +13,7 @@ var urlsToCache = [
   'js/github.bundle.min.js',
   'js/pouchdb-5.4.5.js',
   'js/pouchdb.all-dbs.js',
+  'js/moment.min.js',
   'js/markdown.js',
   'js/commentWorker.js',
   'js/app.js'
