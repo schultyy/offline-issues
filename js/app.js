@@ -102,6 +102,27 @@ IssueListView.prototype.renderIssueView = function(issue) {
   }
 };
 
+function IssueStore(repositoryName) {
+  this.repositoryName = repositoryName;
+  this.database = new PouchDB(this.repositoryName);
+}
+
+IssueStore.prototype.getIssue = function(id) {
+  return this.database.get(id);
+};
+
+IssueStore.prototype.allIssues = function() {
+  return this.database.allDocs({include_docs: true});
+};
+
+IssueStore.prototype.bulkInsertIssues = function(docs) {
+  return this.database.bulkDocs(_.map(docs, setDocId));
+  function setDocId(issue) {
+    issue['_id'] = issue.id.toString();
+    return issue;
+  }
+};
+
 (function() {
   var issueDetailView = null;
   var database = null;
@@ -111,7 +132,7 @@ IssueListView.prototype.renderIssueView = function(issue) {
   }
 
   function renderListView() {
-    database.allDocs({ include_docs: true })
+    database.allIssues()
       .then(function(docs) {
         return Promise.resolve(_.map(docs.rows, function(d) { return d.doc; }));
       })
@@ -121,7 +142,7 @@ IssueListView.prototype.renderIssueView = function(issue) {
 
     function showIssueDetail(ev) {
       var id = $(this).attr('id');
-      database.get(id)
+      database.getIssue(id)
         .then(function(issue) {
           issueDetailView = new IssueDetailView(issue);
           issueDetailView.render();
@@ -149,8 +170,8 @@ IssueListView.prototype.renderIssueView = function(issue) {
     var gh = new GitHub();
     gh.getIssues(repo).listIssues()
       .then(function(resultSet) {
-        database = new PouchDB(repo);
-        return database.bulkDocs(_.map(resultSet.data, setDocId));
+        database = new IssueStore(repo);
+        return database.bulkInsertIssues(resultSet.data);
       })
       .then(function(){
         renderListView();
@@ -160,11 +181,6 @@ IssueListView.prototype.renderIssueView = function(issue) {
         console.log("ERR", err);
         new ErrorBanner("Fetching issues for " + repo + " failed");
       });
-
-    function setDocId(issue) {
-      issue['_id'] = issue.id.toString();
-      return issue;
-    }
   }
 
   function loadAvailableRepositories() {
@@ -176,7 +192,7 @@ IssueListView.prototype.renderIssueView = function(issue) {
             issueDetailView.hide();
             issueDetailView = null;
           }
-          database = new PouchDB(db);
+          database = new IssueStore(db);
           renderListView();
           $('.available-repos').hide();
         });
