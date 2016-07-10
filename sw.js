@@ -3,8 +3,7 @@
 var CACHE_NAME = 'offline-issues-cache-v1';
 
 var urlsToCache = [
-  '/',
-  '/index.html',
+  './',
   'css/bootstrap.css',
   'css/app.css',
   'js/lodash.js',
