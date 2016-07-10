@@ -71,17 +71,14 @@ IssueDetailView.prototype.hide = function() {
 
 (function() {
   var issueDetailView = null;
+  var database = null;
 
   function repoName() {
     return $('#repositoryName').val().toString();
   }
 
-  function renderListView(repoName) {
-    if(!repoName) {
-      throw new Error("expected repoName");
-    }
-    var db = new PouchDB(repoName);
-    db.allDocs({ include_docs: true })
+  function renderListView() {
+    database.allDocs({ include_docs: true })
       .then(function(docs) {
         $(".issue-list").empty();
         var plainDocs = _.map(docs.rows, function(d) { return d.doc; });
@@ -101,8 +98,7 @@ IssueDetailView.prototype.hide = function() {
 
     function showIssueDetail(ev) {
       var id = $(this).attr('id');
-      var db = new PouchDB(repoName);
-      db.get(id)
+      database.get(id)
         .then(function(issue) {
           issueDetailView = new IssueDetailView(issue);
           issueDetailView.render();
@@ -130,11 +126,11 @@ IssueDetailView.prototype.hide = function() {
     var gh = new GitHub();
     gh.getIssues(repo).listIssues()
       .then(function(resultSet) {
-        var db = new PouchDB(repo);
-        return db.bulkDocs(_.map(resultSet.data, setDocId));
+        database = new PouchDB(repo);
+        return database.bulkDocs(_.map(resultSet.data, setDocId));
       })
       .then(function(){
-        renderListView(repo);
+        renderListView();
         $(".add-new-repo").hide();
       })
       .catch(function(err) {
@@ -157,7 +153,8 @@ IssueDetailView.prototype.hide = function() {
             issueDetailView.hide();
             issueDetailView = null;
           }
-          renderListView(db);
+          database = new PouchDB(db);
+          renderListView();
           $('.available-repos').hide();
         });
         return dbEntry;
