@@ -1,5 +1,35 @@
 'use strict';
 
+function ErrorBanner(message) {
+  this.timeoutHandler = null;
+
+  $(".error-banner").html(message);
+  $('.error-banner').show();
+
+  this.hideError = function() {
+    $(".error-banner").html('');
+    $('.error-banner').hide();
+    window.clearTimeout(this.timeoutHandler);
+    this.timeoutHandler = null;
+  };
+  this.timeoutHandler = setTimeout(this.hideError, 1000 * 5);
+}
+
+function InfoBanner(message) {
+  this.timeoutHandler = null;
+
+  $(".info-banner").html(message);
+  $('.info-banner').show();
+
+  this.hideInfo = function() {
+    $(".info-banner").html('');
+    $('.info-banner').hide();
+    window.clearTimeout(this.timeoutHandler);
+    this.timeoutHandler = null;
+  };
+  this.timeoutHandler = setTimeout(this.hideInfo, 1000 * 5);
+}
+
 function Label(text, color) {
   this.text = text;
   this.color = color;
@@ -430,36 +460,6 @@ TokenModalScreen.prototype.removeHandlers = function() {
       modal.removeHandlers();
       modal = null;
     };
-  }
-
-  function ErrorBanner(message) {
-    this.timeoutHandler = null;
-
-    $(".error-banner").html(message);
-    $('.error-banner').show();
-
-    this.hideError = function() {
-      $(".error-banner").html('');
-      $('.error-banner').hide();
-      window.clearTimeout(this.timeoutHandler);
-      this.timeoutHandler = null;
-    }
-    this.timeoutHandler = setTimeout(this.hideError, 1000 * 5);
-  }
-
-  function InfoBanner(message) {
-    this.timeoutHandler = null;
-
-    $(".info-banner").html(message);
-    $('.info-banner').show();
-
-    this.hideInfo = function() {
-      $(".info-banner").html('');
-      $('.info-banner').hide();
-      window.clearTimeout(this.timeoutHandler);
-      this.timeoutHandler = null;
-    }
-    this.timeoutHandler = setTimeout(this.hideInfo, 1000 * 5);
   }
 
   $(document).ready(function() {
