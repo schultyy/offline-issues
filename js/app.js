@@ -76,7 +76,7 @@ IssueDetailView.prototype.renderComments = function(container) {
     container.append(_.map(comments, function(comment) {
       var comments = $("<div class='col-xs-12 col-sm-10'></div>");
       comments.append(createAuthorAndDate(comment));
-      comments.append($("<p class='text'>" + comment.body + "</p>"));
+      comments.append($("<div class='text'>" + self.prepareBody(comment.body) + "</div>"));
 
       var container = $("<div>");
       var image = $("<div class='col-xs-2 col-sm-2'>");
@@ -135,6 +135,20 @@ IssueDetailView.prototype.keyHandler = function(event) {
   }
 };
 
+IssueDetailView.prototype.prepareBody = function(body) {
+  marked.setOptions({
+    renderer: new marked.Renderer(),
+    gfm: true,
+    tables: true,
+    breaks: false,
+    pedantic: false,
+    sanitize: false,
+    smartLists: true,
+    smartypants: false
+  });
+  return marked(body);
+};
+
 IssueDetailView.prototype.render = function() {
   var container = $('.issue-detail');
 
@@ -143,7 +157,7 @@ IssueDetailView.prototype.render = function() {
   container.append(backButton);
 
   var title = $("<div class='col-xs-12 col-sm-9'><span class='state'>"+ this.issue.state +"</span><span class='number'>#"+ this.issue.number +"</span><span class='title'>"+ this.issue.title +"</span></div>");
-  var text = $("<div class='col-xs-12 col-sm-12'><div class='text'>" + prepareBody(this.issue.body) + "</div></div>");
+  var text = $("<div class='col-xs-12 col-sm-12'><div class='text'>" + this.prepareBody(this.issue.body) + "</div></div>");
   var labels = $("<div class='col-xs-12 col-sm-12'></div>");
   labels.append(this.renderLabels());
 
@@ -161,20 +175,6 @@ IssueDetailView.prototype.render = function() {
   $(".issue-list").hide();
   this.renderComments(container);
   $(document).keydown(this.keyHandler.bind(this));
-
-  function prepareBody(body) {
-    marked.setOptions({
-      renderer: new marked.Renderer(),
-      gfm: true,
-      tables: true,
-      breaks: false,
-      pedantic: false,
-      sanitize: false,
-      smartLists: true,
-      smartypants: false
-    });
-    return marked(body);
-  }
 }
 
 IssueDetailView.prototype.hide = function() {
