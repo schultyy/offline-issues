@@ -99,8 +99,15 @@ IssueDetailView.prototype.renderMilestone = function() {
   return container;
 };
 
+IssueDetailView.prototype.keyHandler = function(event) {
+  if(event.keyCode == 8) { //backspace
+    this.hide();
+  }
+};
+
 IssueDetailView.prototype.render = function() {
   var container = $('.issue-detail');
+
   var backButton = $("<div class='col-xs-12 col-sm-12'><div class='back-button'></div></div>");
   backButton.click(this.hide);
   container.append(backButton);
@@ -123,6 +130,7 @@ IssueDetailView.prototype.render = function() {
   $(container).show();
   $(".issue-list").hide();
   this.renderComments(container);
+  $(document).keydown(this.keyHandler.bind(this));
 
   function prepareBody(body) {
     marked.setOptions({
@@ -143,6 +151,7 @@ IssueDetailView.prototype.hide = function() {
   $(".issue-list").show();
   $(".issue-detail").hide();
   $(".issue-detail").empty();
+  $(document).off("keydown", this.keyHandler);
 };
 
 function IssueListView(issues, detailCallback) {
