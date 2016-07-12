@@ -18,7 +18,7 @@ function IssueDetailView(issue, issueStore) {
 }
 
 IssueDetailView.prototype.renderAvatar = function(avatar_url) {
-  return $("<div class='col-xs-3 col-sm-2'><img class='img-responsive img-thumbnail avatar' src='"+ avatar_url +"'/></div>");
+  return $("<img class='img-responsive img-thumbnail avatar' src='"+ avatar_url +"'/>");
 };
 
 IssueDetailView.prototype.renderLabels = function() {
@@ -49,7 +49,9 @@ IssueDetailView.prototype.renderComments = function(container) {
       comments.append($("<p class='text'>" + comment.body + "</p>"));
 
       var container = $("<div>");
-      container.append(self.renderAvatar(comment.user.avatar_url));
+      var image = $("<div class='col-xs-2 col-sm-2'>");
+      image.append(self.renderAvatar(comment.user.avatar_url));
+      container.append(image);
       container.append(comments);
       container.append($('<div class="clearfix">'));
       return container;
@@ -80,7 +82,9 @@ IssueDetailView.prototype.render = function() {
   var labels = $("<div class='col-xs-12 col-sm-12'></div>");
   labels.append(this.renderLabels());
 
-  container.append(this.renderAvatar(this.issue.user.avatar_url));
+  var image = $("<div class='col-xs-3 col-sm-2'>");
+  image.append(this.renderAvatar(this.issue.user.avatar_url));
+  container.append(image);
   container.append(title);
   container.append($("<div class='clearfix'>"));
   container.append(labels);
