@@ -59,6 +59,17 @@
   margin-left: 5px;
 }
 
+.issue-detail .state {
+  color: white;
+  background-color: #6cc644;
+  text-transform: uppercase;
+  width: 50%;
+  height: 50%;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 2px;
+}
+
 .issue-detail .author-and-date {
   margin-top: 5px;
   background-color: #565695;

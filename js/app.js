@@ -112,7 +112,7 @@ IssueDetailView.prototype.render = function() {
   backButton.click(this.hide);
   container.append(backButton);
 
-  var title = $("<div class='col-xs-12 col-sm-9'><span class='number'>#"+ this.issue.number +"</span><span class='title'>"+ this.issue.title +"</span></div>");
+  var title = $("<div class='col-xs-12 col-sm-9'><span class='state'>"+ this.issue.state +"</span><span class='number'>#"+ this.issue.number +"</span><span class='title'>"+ this.issue.title +"</span></div>");
   var text = $("<div class='col-xs-12 col-sm-12'><div class='text'>" + prepareBody(this.issue.body) + "</div></div>");
   var labels = $("<div class='col-xs-12 col-sm-12'></div>");
   labels.append(this.renderLabels());
