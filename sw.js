@@ -1,6 +1,6 @@
 'use strict';
 
-var CACHE_NAME = 'offline-issues-cache-v1';
+var CACHE_NAME = 'offline-issues-cache-v2';
 
 var urlsToCache = [
   './',
