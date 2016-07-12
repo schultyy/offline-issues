@@ -41,7 +41,7 @@ $ http-server
 - jquery
 - PouchDB
 - PouchDB all-dbs
-- markdown.js
+- [marked](https://github.com/chjj/marked)
 
 ## Contribute
 Contributions are very welcome. Whether it's an issue or even a pull request. For pull requests you can use the following flow:

@@ -13,7 +13,7 @@ var urlsToCache = [
   'js/pouchdb-5.4.5.js',
   'js/pouchdb.all-dbs.js',
   'js/moment.min.js',
-  'js/markdown.js',
+  'js/marked.js',
   'js/commentWorker.js',
   'js/app.js'
 ];

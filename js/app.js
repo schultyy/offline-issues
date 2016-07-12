@@ -125,7 +125,17 @@ IssueDetailView.prototype.render = function() {
   this.renderComments(container);
 
   function prepareBody(body) {
-    return markdown.toHTML(body);
+    marked.setOptions({
+      renderer: new marked.Renderer(),
+      gfm: true,
+      tables: true,
+      breaks: false,
+      pedantic: false,
+      sanitize: false,
+      smartLists: true,
+      smartypants: false
+    });
+    return marked(body);
   }
 }
 
