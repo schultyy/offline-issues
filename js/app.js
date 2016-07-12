@@ -44,15 +44,20 @@ IssueDetailView.prototype.renderComments = function(container) {
   .then(function(comments) {
     container.append(_.map(comments, function(comment) {
       var commentContainer = $("<div class='col-xs-12 col-sm-12'></div>");
+      commentContainer.append(createAuthorAndDate(comment));
+
+      commentContainer.append($("<p class='text'>" + comment.body + "</p>"));
+      return commentContainer;
+    }));
+
+    function createAuthorAndDate(comment) {
       var authorLink = $("<a target='_new' class='user-url' href='"+ comment.user.html_url +"'>" + comment.user.login + "</a>");
       var createdAt = $("<time class='created-at'>"+ moment(comment.created_at).format("lll") +"</time>");
       var authorAndDate = $("<div class='author-and-date'></div>");
       authorAndDate.append(authorLink);
       authorAndDate.append(createdAt);
-      commentContainer.append(authorAndDate);
-      commentContainer.append($("<p class='text'>" + comment.body + "</p>"));
-      return commentContainer;
-    }));
+      return authorAndDate;
+    }
   })
   .catch(function (err) {
     new ErrorBanner("Error while fetching comments: " + err.message);
