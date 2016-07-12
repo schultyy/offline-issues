@@ -72,23 +72,20 @@ IssueDetailView.prototype.renderComments = function(container) {
 };
 
 IssueDetailView.prototype.renderAssignee = function() {
-  var container = $("<div class='col-xs-12 col-sm-12'>");
-  if(this.issue.assignee && this.issue.assignees) {
+  var container = $("<div class='col-xs-12 col-sm-12 assignees'>");
+  if(this.issue.assignee && this.issue.assignees && this.issue.assignees.length > 0) {
     var self = this;
-    container.append("<span>Asignees: </span>");
-    container.append(_.map(self.issue.assignees, function(assignee) {
+    container.append("<div>Asignees: </div>");
+    var assigneeList = $("<ul>");
+    assigneeList.append(_.map(self.issue.assignees, function(assignee) {
       var assigneeLink = $("<a>");
       assigneeLink.attr("href", assignee.html_url);
       assigneeLink.html(assignee.login);
-      return assigneeLink;
+      var listItem = $("<li>");
+      listItem.append(assigneeLink);
+      return listItem;
     }));
-  }
-  else if(this.issue.assignee) {
-    container.append("<span>Asignee: </span>");
-    var assigneeLink = $("<a>");
-    assigneeLink.attr("href", assignee.html_url);
-    assigneeLink.html(assignee.login);
-    container.append(assigneeLink);
+    container.append(assigneeList);
   }
 
   return container;

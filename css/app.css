@@ -103,6 +103,15 @@
   border-bottom-right-radius: 3px;
 }
 
+.issue-detail .assignees {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.issue-detail .assignees ul {
+  list-style-type: none;
+}
+
 .controls {
   margin-top: 15px;
 }
