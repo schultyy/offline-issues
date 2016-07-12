@@ -72,7 +72,7 @@ IssueDetailView.prototype.renderComments = function(container) {
 };
 
 IssueDetailView.prototype.renderAssignee = function() {
-  var container = $("<div class='col-xs-12 col-sm-12 assignees'>");
+  var container = $("<div class='col-xs-6 col-sm-6 assignees'>");
   if(this.issue.assignee && this.issue.assignees && this.issue.assignees.length > 0) {
     var self = this;
     container.append("<div>Asignees: </div>");
@@ -87,7 +87,15 @@ IssueDetailView.prototype.renderAssignee = function() {
     }));
     container.append(assigneeList);
   }
+  return container;
+};
 
+IssueDetailView.prototype.renderMilestone = function() {
+  var container = $("<div class='col-xs-6 col-sm-6'>");
+  if(this.issue.milestone) {
+    container.append("<span>Milestone: </span>");
+    container.append("<div>" + this.issue.milestone.title + "</div>");
+  }
   return container;
 };
 
@@ -109,6 +117,7 @@ IssueDetailView.prototype.render = function() {
   container.append($("<div class='clearfix'>"));
   container.append(labels);
   container.append(this.renderAssignee());
+  container.append(this.renderMilestone());
   container.append(this.renderIssueAuthorAndDate());
   container.append(text);
   $(container).show();

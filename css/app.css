@@ -103,13 +103,13 @@
   border-bottom-right-radius: 3px;
 }
 
-.issue-detail .assignees {
-  margin-left: 5px;
-  margin-right: 5px;
-}
-
 .issue-detail .assignees ul {
   list-style-type: none;
+  padding-left: 20px;
+}
+
+.issue-detail .assignees li {
+  padding-left: 0px;
 }
 
 .controls {
