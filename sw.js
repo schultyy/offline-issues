@@ -53,7 +53,9 @@ self.addEventListener('fetch', function(event) {
                 return response;
               })
               .catch(function(err) {
-                if (event.request.headers.get('Accept').indexOf('image') !== -1) {
+                var acceptHeader = event.request.headers.get('Accept');
+
+                if (acceptHeader.startsWith('image')) {
                   return new Response(PLACEHOLDER_SVG, { headers: { 'Content-Type': 'image/svg+xml' }});
                 }
               });
