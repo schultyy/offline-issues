@@ -1,12 +1,8 @@
 @charset 'utf-8';
 
 .button {
-  border: 2px solid #6B4E90;
   background-color: #6B4E90;
   color: white;
-  padding: 5px;
-  border-radius: 5px;
-  margin: 5px;
 }
 
 .available-repos {
@@ -15,16 +11,6 @@
 
 .add-new-repo {
   margin-top: 10px;
-}
-
-.button:hover {
-  text-decoration: none;
-  color: white;
-}
-
-.button:visited {
-  text-decoration: none;
-  color: white;
 }
 
 .repo-form {
